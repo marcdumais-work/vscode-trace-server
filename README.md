@@ -1,6 +1,6 @@
 # vscode-trace-server README
 
-This is the README for your extension "vscode-trace-server". After writing up a brief description, we recommend including the following sections.
+After writing up a brief description, we recommend including the following sections.
 
 ## Features
 
@@ -15,6 +15,13 @@ For example if there is an image subfolder under your extension project workspac
 ## Requirements
 
 If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+
+### Packaging the extension
+
+1. Run `yarn`, which should automatically include `yarn install`.
+1. Run `yarn test` on a need basis, or launch `Extension Tests` under `Run and Debug`.
+1. Follow [these instructions](https://code.visualstudio.com/api/working-with-extensions/publishing-extension#vsce) once to run `vsce package` at will.
+1. Ignore the missing-repository warning for now.
 
 ## Extension Settings
 
