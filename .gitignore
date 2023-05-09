@@ -1,1 +1,5 @@
 # LC_COLLATE=C sort .gitignore
+/.vscode-test/
+/dist/
+/node_modules/
+/out/
