@@ -1,78 +1,60 @@
-# vscode-trace-server README
+# VSCode Trace Server extension
 
-After writing up a brief description, we recommend including the following sections.
+* This is a TypeScript extension, officially named `vscode-trace-server`.
+* It is meant as companion to the [vscode-trace-extension][vscode-trace-extension].
 
-## Features
+This extension was started from Code's [guide][guide] and related [sample][sample].
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+## Documentation
 
-For example if there is an image subfolder under your extension project workspace:
+This README is the usual entry point for documenting this extension.
 
-\!\[feature X\]\(images/feature-x.png\)
+* One may refer to the [contribution guide](CONTRIBUTING.md) for how to contribute.
+* Please also refer to the [security policy](SECURITY.md) on a need basis.
+* The usual [license description](LICENSE.md) file accompanies these too.
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+## Build
 
-## Requirements
+Run `yarn`, which should automatically include `yarn install`.
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+* This extension is bundled using `webpack`, originally based on [the guide][guide].
+* There is no support yet for any automated CI on GitHub; planned for though.
 
-### Packaging the extension
+## Test
 
-1. Run `yarn`, which should automatically include `yarn install`.
-1. Run `yarn test` on a need basis, or launch `Extension Tests` under `Run and Debug`.
-1. Follow [these instructions](https://code.visualstudio.com/api/working-with-extensions/publishing-extension#vsce) once to run `vsce package` at will.
+Run `yarn test` on a need basis.
+
+Alternatively, launch `Extension Tests` under `Run and Debug`.
+
+## Installation
+
+1. Follow [these instructions][vsce] once to run `vsce package` at will.
 1. Ignore the missing-repository warning for now.
+1. [Install][install] the hereby generated `vscode-trace-server-*.vsix` file.
+1. Alternatively, simply launch the packaged extension using `Run Extension`.
 
-## Extension Settings
+## Development
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+The usual [Prettier][prettier] and [ESLint][eslint] combo in VS Code or Codium OSS is used.
 
-For example:
+* [This matcher][matcher] is also used, since the originally generated extension per [guide].
+* Markdown gets linted with the (usual) [vscode-markdownlint][markdownlint] extension.
+* [SonarLint][sonarlint] is also assumed while further developing this extension.
 
-This extension contributes the following settings:
+These are actual [recommended extensions herein](.vscode/extensions.json).
 
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
+## Status
 
-## Known Issues
+This extension is currently under [initial development][backlog].
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
-
-## Release Notes
-
-Users appreciate release notes as you update your extension.
-
-### 1.0.0
-
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
----
-
-## Following extension guidelines
-
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
-
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
-
-## Working with Markdown
-
-You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
-
-## For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+[backlog]: https://github.com/eclipse-cdt-cloud/vscode-trace-extension/issues/15
+[eslint]: https://open-vsx.org/extension/dbaeumer/vscode-eslint
+[guide]: https://code.visualstudio.com/api/get-started/your-first-extension
+[install]: https://code.visualstudio.com/docs/editor/extension-marketplace#_install-from-a-vsix
+[markdownlint]: https://open-vsx.org/extension/DavidAnson/vscode-markdownlint
+[matcher]: https://open-vsx.org/extension/amodio/tsl-problem-matcher
+[prettier]: https://open-vsx.org/extension/esbenp/prettier-vscode
+[sample]: https://github.com/microsoft/vscode-extension-samples/blob/main/helloworld-sample
+[sonarlint]: https://open-vsx.org/extension/SonarSource/sonarlint-vscode
+[vsce]: https://code.visualstudio.com/api/working-with-extensions/publishing-extension#vsce
+[vscode-trace-extension]: https://github.com/eclipse-cdt-cloud/vscode-trace-extension
