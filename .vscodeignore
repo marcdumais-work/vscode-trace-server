@@ -1,12 +1,13 @@
-.vscode/**
-.vscode-test/**
-out/**
-node_modules/**
-src/**
-.gitignore
-.yarnrc
-webpack.config.js
-**/tsconfig.json
-**/.eslintrc.json
+# LC_COLLATE=C sort .vscodeignore
 **/*.map
 **/*.ts
+**/.eslintrc.json
+**/tsconfig.json
+.gitignore
+.vscode-test/**
+.vscode/**
+.yarnrc
+node_modules/**
+out/**
+src/**
+webpack.config.js
