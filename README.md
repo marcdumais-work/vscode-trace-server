@@ -2,6 +2,7 @@
 
 * This is a TypeScript extension, officially named `vscode-trace-server`.
 * It is meant as companion to the [vscode-trace-extension][vscode-trace-extension].
+* It registers `Trace Server:` start/stop commands, for a default instance locally.
 
 This extension was started from Code's [guide][guide] and related [sample][sample].
 
@@ -31,6 +32,24 @@ Alternatively, launch `Extension Tests` under `Run and Debug`.
 1. Follow [these instructions][vsce] once to run `vsce package` at will.
 1. [Install][install] the hereby generated `vscode-trace-server-*.vsix` file.
 1. Alternatively, simply launch the packaged extension using `Run Extension`.
+1. Through `Command Palette`, the `Trace Server:` start/stop commands should be available.
+
+## Usage
+
+Currently, `/usr/bin/tracecompass-server` is assumed locally; to [eventually un-hardcode][backlog].
+
+1. Use the `Trace Server: (re)start` command to launch that `tracecompass-server` instance.
+1. The latter should be made of two related processes; `grep` for `tracecompass` or the like.
+1. Use the `Trace Server: stop` command once ready to kill both processes, stopping the server.
+1. Alternatively, exiting the application should automatically stop the started server if any.
+
+The above runs the trace server using defaults based on [Incubator's][server] (README).
+
+* `Trace Server: (re)start` can also be used if willing to stop then (re)start the server.
+* `Trace Server: (re)start` stops the previously started server if any; to use with care.
+* `Trace Server: stop` used upon no previously started server does nothing.
+
+Currently, there is no check if the start/stop commands were successful; `ps` can be used.
 
 ## Development
 
@@ -54,6 +73,7 @@ This extension is currently under [initial development][backlog].
 [matcher]: https://open-vsx.org/extension/amodio/tsl-problem-matcher
 [prettier]: https://open-vsx.org/extension/esbenp/prettier-vscode
 [sample]: https://github.com/microsoft/vscode-extension-samples/blob/main/helloworld-sample
+[server]: https://git.eclipse.org/r/plugins/gitiles/tracecompass.incubator/org.eclipse.tracecompass.incubator/+/refs/heads/master/trace-server/#running-the-server
 [sonarlint]: https://open-vsx.org/extension/SonarSource/sonarlint-vscode
 [vsce]: https://code.visualstudio.com/api/working-with-extensions/publishing-extension#vsce
 [vscode-trace-extension]: https://github.com/eclipse-cdt-cloud/vscode-trace-extension
