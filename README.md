@@ -29,7 +29,6 @@ Alternatively, launch `Extension Tests` under `Run and Debug`.
 ## Installation
 
 1. Follow [these instructions][vsce] once to run `vsce package` at will.
-1. Ignore the missing-repository warning for now.
 1. [Install][install] the hereby generated `vscode-trace-server-*.vsix` file.
 1. Alternatively, simply launch the packaged extension using `Run Extension`.
 
