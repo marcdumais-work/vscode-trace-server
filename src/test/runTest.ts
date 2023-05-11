@@ -1,7 +1,7 @@
 import * as path from "path";
-
 import { runTests } from "@vscode/test-electron";
 
+// Kept as generated from https://code.visualstudio.com/api/get-started/your-first-extension
 async function main() {
   try {
     // The folder containing the Extension Manifest package.json

@@ -1,15 +1,45 @@
 import * as assert from "assert";
-
-// You can import and use all API from the 'vscode' module
-// as well as import your extension to test it
 import * as vscode from "vscode";
-// TODO import * as myExtension from '../../extension';
+import * as extension from "../../extension";
 
+// First generated from https://code.visualstudio.com/api/get-started/your-first-extension
 suite("Extension Test Suite", () => {
   vscode.window.showInformationMessage("Start all tests.");
 
-  test("Sample test", () => {
-    assert.strictEqual(-1, [1, 2, 3].indexOf(5));
-    assert.strictEqual(-1, [1, 2, 3].indexOf(0));
+  const start = "vscode-trace-server.start";
+  const stop = "vscode-trace-server.stop";
+
+  test("Extension should be able to register " + start, () => {
+    let registered = false;
+    extension.registerStart_test();
+
+    vscode.commands.getCommands(true).then(function (commands) {
+      for (const command in commands) {
+        if (command === start) {
+          registered = true;
+        }
+        if (registered) {
+          break;
+        }
+      }
+      assert.ok(registered);
+    });
+  });
+
+  test("Extension should be able to register " + stop, () => {
+    let registered = false;
+    extension.registerStop_test();
+
+    vscode.commands.getCommands(true).then(function (commands) {
+      for (const command in commands) {
+        if (command === stop) {
+          registered = true;
+        }
+        if (registered) {
+          break;
+        }
+      }
+      assert.ok(registered);
+    });
   });
 });
