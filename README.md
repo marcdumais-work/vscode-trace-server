@@ -34,6 +34,14 @@ Alternatively, launch `Extension Tests` under `Run and Debug`.
 1. Alternatively, simply launch the packaged extension using `Run Extension`.
 1. Through `Command Palette`, the `Trace Server:` start/stop commands should be available.
 
+This extension can be installed in either one (or many) of:
+
+* [VS Code][code] or [Codium][codium], or
+* a [Theia][theia] application or [Blueprint][blueprint].
+
+A nearby [companion extension][vscode-trace-extension] installation renders a `Trace Server`
+[status bar item][item].
+
 ## Usage
 
 Currently, `/usr/bin/tracecompass-server` is assumed locally; to [eventually un-hardcode][backlog].
@@ -66,14 +74,19 @@ These are actual [recommended extensions herein](.vscode/extensions.json).
 This extension is currently under [initial development][backlog].
 
 [backlog]: https://github.com/eclipse-cdt-cloud/vscode-trace-extension/issues/15
+[blueprint]: https://theia-ide.org/docs/blueprint_download
+[code]: https://code.visualstudio.com
+[codium]: https://vscodium.com
 [eslint]: https://open-vsx.org/extension/dbaeumer/vscode-eslint
 [guide]: https://code.visualstudio.com/api/get-started/your-first-extension
 [install]: https://code.visualstudio.com/docs/editor/extension-marketplace#_install-from-a-vsix
+[item]: https://github.com/eclipse-cdt-cloud/vscode-trace-extension/pull/120
 [markdownlint]: https://open-vsx.org/extension/DavidAnson/vscode-markdownlint
 [matcher]: https://open-vsx.org/extension/amodio/tsl-problem-matcher
 [prettier]: https://open-vsx.org/extension/esbenp/prettier-vscode
 [sample]: https://github.com/microsoft/vscode-extension-samples/blob/main/helloworld-sample
 [server]: https://git.eclipse.org/r/plugins/gitiles/tracecompass.incubator/org.eclipse.tracecompass.incubator/+/refs/heads/master/trace-server/#running-the-server
 [sonarlint]: https://open-vsx.org/extension/SonarSource/sonarlint-vscode
+[theia]: https://theia-ide.org
 [vsce]: https://code.visualstudio.com/api/working-with-extensions/publishing-extension#vsce
 [vscode-trace-extension]: https://github.com/eclipse-cdt-cloud/vscode-trace-extension
