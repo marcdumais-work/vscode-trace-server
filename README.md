@@ -42,11 +42,14 @@ This extension can be installed in either one (or many) of:
 A nearby [companion extension][vscode-trace-extension] installation renders a `Trace Server`
 [status bar item][item].
 
+## Configuration
+
+* Under the usual `Trace Compass` preference settings, the trace server `path` can be entered.
+* Otherwise, the default `/usr/bin/tracecompass-server` is assumed locally.
+
 ## Usage
 
-Currently, `/usr/bin/tracecompass-server` is assumed locally; to [eventually un-hardcode][backlog].
-
-1. Use the `Trace Server: (re)start` command to launch that `tracecompass-server` instance.
+1. Use the `Trace Server: (re)start` command to launch that Trace Compass server instance.
 1. The latter should be made of two related processes; `grep` for `tracecompass` or the like.
 1. Use the `Trace Server: stop` command once ready to kill both processes, stopping the server.
 1. Alternatively, exiting the application should automatically stop the started server if any.
