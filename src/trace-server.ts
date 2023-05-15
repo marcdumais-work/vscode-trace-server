@@ -6,7 +6,7 @@ export class TraceServer {
   private server: ChildProcess | undefined;
 
   private async start(): Promise<void> {
-    this.server = spawn(this.getPath());
+    this.server = spawn(this.getPath(), this.getArgs());
   }
 
   async stop(): Promise<void> {
@@ -35,5 +35,18 @@ export class TraceServer {
       path = "/usr/bin/tracecompass-server";
     }
     return path;
+  }
+
+  private getArgs(): string[] {
+    // Based on getPath above:
+    const configuration = vscode.workspace.getConfiguration(
+      "trace-compass.traceserver"
+    );
+
+    let args = configuration.get<string>("arguments");
+    if (!args) {
+      args = "";
+    }
+    return args.split(" ");
   }
 }

@@ -45,7 +45,9 @@ A nearby [companion extension][vscode-trace-extension] installation renders a `T
 ## Configuration
 
 * Under the usual `Trace Compass` preference settings, the trace server `path` can be entered.
-* Otherwise, the default `/usr/bin/tracecompass-server` is assumed locally.
+  * Otherwise, the default `/usr/bin/tracecompass-server` is assumed locally.
+* Command-line `arguments` can be optionally set, [any of these if Incubator][server] server.
+  * Multiple arguments have to be separated by a space character each.
 
 ## Usage
 
@@ -54,13 +56,11 @@ A nearby [companion extension][vscode-trace-extension] installation renders a `T
 1. Use the `Trace Server: stop` command once ready to kill both processes, stopping the server.
 1. Alternatively, exiting the application should automatically stop the started server if any.
 
-The above runs the trace server using defaults based on [Incubator's][server] (README).
+Currently, there is no check if the start/stop commands were successful; `ps` can be used.
 
 * `Trace Server: (re)start` can also be used if willing to stop then (re)start the server.
 * `Trace Server: (re)start` stops the previously started server if any; to use with care.
 * `Trace Server: stop` used upon no previously started server does nothing.
-
-Currently, there is no check if the start/stop commands were successful; `ps` can be used.
 
 ## Development
 
