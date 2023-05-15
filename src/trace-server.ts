@@ -2,11 +2,16 @@ import { ChildProcess, spawn } from "child_process";
 import treeKill from "tree-kill";
 import * as vscode from "vscode";
 
+// Based on github.com/eclipse-cdt-cloud/vscode-trace-extension/blob/master/vscode-trace-extension/package.json
+// -for naming consistency purposes across sibling extensions/settings:
+const section = "trace-compass.traceserver";
+
 export class TraceServer {
   private server: ChildProcess | undefined;
 
   private async start(): Promise<void> {
-    this.server = spawn(this.getPath(), this.getArgs());
+    const from = vscode.workspace.getConfiguration(section);
+    this.server = spawn(this.getPath(from), this.getArgs(from));
   }
 
   async stop(): Promise<void> {
@@ -22,13 +27,7 @@ export class TraceServer {
     this.start();
   }
 
-  private getPath(): string {
-    // Based on github.com/eclipse-cdt-cloud/vscode-trace-extension/blob/master/vscode-trace-extension/package.json
-    // -for naming consistency purposes across sibling extensions/settings:
-    const configuration = vscode.workspace.getConfiguration(
-      "trace-compass.traceserver"
-    );
-
+  private getPath(configuration: vscode.WorkspaceConfiguration): string {
     let path = configuration.get<string>("path");
     if (!path) {
       // Based on this extension's package.json default, if unset here:
@@ -37,12 +36,7 @@ export class TraceServer {
     return path;
   }
 
-  private getArgs(): string[] {
-    // Based on getPath above:
-    const configuration = vscode.workspace.getConfiguration(
-      "trace-compass.traceserver"
-    );
-
+  private getArgs(configuration: vscode.WorkspaceConfiguration): string[] {
     let args = configuration.get<string>("arguments");
     if (!args) {
       args = "";
