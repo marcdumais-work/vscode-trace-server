@@ -62,7 +62,8 @@
     "test": "node ./out/test/runTest.js"
   },
   "dependencies": {
-    "tree-kill": "^1.2.2"
+    "tree-kill": "^1.2.2",
+    "tsp-typescript-client": "next"
   },
   "devDependencies": {
     "@types/glob": "^8.1.0",

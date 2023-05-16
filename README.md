@@ -3,6 +3,7 @@
 * This is a TypeScript extension, officially named `vscode-trace-server`.
 * It is meant as companion to the [vscode-trace-extension][vscode-trace-extension].
 * It registers `Trace Server:` start/stop commands, for a default instance locally.
+* It depends on the [tsp-typescript-client][client] for server health check purposes.
 
 This extension was started from Code's [guide][guide] and related [sample][sample].
 
@@ -57,7 +58,7 @@ A nearby [companion extension][vscode-trace-extension] installation renders a `T
 1. Alternatively, exiting the application should automatically stop the started server if any.
 1. Now, `Trace Server: start (if stopped)` only starts the server if known as currently stopped.
 
-Currently, there is no check if the start/stop commands were successful; `ps` can be used.
+Currently, there are checks for if server startup was successful; `ps` can be used otherwise.
 
 * `Trace Server: (re)start` can also be used if willing to stop then (re)start the server.
 * `Trace Server: (re)start` stops the previously started server if any; to use with care.
@@ -79,6 +80,7 @@ This extension is currently under [initial development][backlog].
 
 [backlog]: https://github.com/eclipse-cdt-cloud/vscode-trace-extension/issues/15
 [blueprint]: https://theia-ide.org/docs/blueprint_download
+[client]: https://github.com/eclipse-cdt-cloud/tsp-typescript-client
 [code]: https://code.visualstudio.com
 [codium]: https://vscodium.com
 [eslint]: https://open-vsx.org/extension/dbaeumer/vscode-eslint

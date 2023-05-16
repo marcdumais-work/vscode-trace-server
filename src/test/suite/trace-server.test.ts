@@ -17,4 +17,14 @@ suite("TraceServer Test Suite", () => {
     const args = server.getArgs_test(from);
     assert.deepEqual(args, [""]);
   });
+
+  test("TraceServer should be able to get default url", () => {
+    const url = server.getUrl_test(from);
+    assert.strictEqual(url, "http://localhost:8080");
+  });
+
+  test("TraceServer should be able to get default apiPath", () => {
+    const apiPath = server.getApiPath_test(from);
+    assert.strictEqual(apiPath, "tsp/api");
+  });
 });
