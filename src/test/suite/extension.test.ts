@@ -6,9 +6,10 @@ import * as extension from "../../extension";
 suite("Extension Test Suite", () => {
   vscode.window.showInformationMessage("Start extension tests.");
 
-  const start = "vscode-trace-server.start";
-  const stop = "vscode-trace-server.stop";
-  const startIfStopped = "vscode-trace-server.start-if-stopped";
+  const extensionId = "vscode-trace-server";
+  const start = extensionId + ".start";
+  const stop = extensionId + ".stop";
+  const startIfStopped = extensionId + ".start-if-stopped";
 
   test("Extension should be able to register " + start, () => {
     let registered = false;
