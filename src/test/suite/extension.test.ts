@@ -4,7 +4,7 @@ import * as extension from "../../extension";
 
 // First generated from https://code.visualstudio.com/api/get-started/your-first-extension
 suite("Extension Test Suite", () => {
-  vscode.window.showInformationMessage("Start all tests.");
+  vscode.window.showInformationMessage("Start extension tests.");
 
   const start = "vscode-trace-server.start";
   const stop = "vscode-trace-server.stop";

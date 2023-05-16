@@ -35,6 +35,7 @@ export class TraceServer {
     }
     return path;
   }
+  public getPath_test = this.getPath;
 
   private getArgs(configuration: vscode.WorkspaceConfiguration): string[] {
     let args = configuration.get<string>("arguments");
@@ -43,4 +44,5 @@ export class TraceServer {
     }
     return args.split(" ");
   }
+  public getArgs_test = this.getArgs;
 }
