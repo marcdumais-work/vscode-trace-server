@@ -29,6 +29,10 @@
       {
         "command": "vscode-trace-server.stop",
         "title": "Trace Server: stop"
+      },
+      {
+        "command": "vscode-trace-server.start-if-stopped",
+        "title": "Trace Server: start (if stopped)"
       }
     ],
     "configuration": {

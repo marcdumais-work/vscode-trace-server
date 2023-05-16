@@ -8,6 +8,7 @@ suite("Extension Test Suite", () => {
 
   const start = "vscode-trace-server.start";
   const stop = "vscode-trace-server.stop";
+  const startIfStopped = "vscode-trace-server.start-if-stopped";
 
   test("Extension should be able to register " + start, () => {
     let registered = false;
@@ -33,6 +34,23 @@ suite("Extension Test Suite", () => {
     vscode.commands.getCommands(true).then(function (commands) {
       for (const command in commands) {
         if (command === stop) {
+          registered = true;
+        }
+        if (registered) {
+          break;
+        }
+      }
+      assert.ok(registered);
+    });
+  });
+
+  test("Extension should be able to register " + startIfStopped, () => {
+    let registered = false;
+    extension.registerStartIfStopped_test();
+
+    vscode.commands.getCommands(true).then(function (commands) {
+      for (const command in commands) {
+        if (command === startIfStopped) {
           registered = true;
         }
         if (registered) {

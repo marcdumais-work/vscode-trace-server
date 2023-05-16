@@ -18,6 +18,7 @@ export class TraceServer {
     await new Promise<void>(() => {
       if (this.server && this.server.pid) {
         treeKill(this.server.pid);
+        this.server = undefined;
       }
     });
   }
@@ -25,6 +26,12 @@ export class TraceServer {
   async restart(): Promise<void> {
     this.stop();
     this.start();
+  }
+
+  async startIfStopped(): Promise<void> {
+    if (!this.server) {
+      this.start();
+    }
   }
 
   private getPath(configuration: vscode.WorkspaceConfiguration): string {
