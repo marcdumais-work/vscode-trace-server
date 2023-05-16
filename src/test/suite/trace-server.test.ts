@@ -7,23 +7,24 @@ suite("TraceServer Test Suite", () => {
 
   const from = vscode.workspace.getConfiguration("trace-compass.traceserver");
   const server = new TraceServer();
+  const prefix = "TraceServer should be able to get default ";
 
-  test("TraceServer should be able to get default path", () => {
+  test(prefix + "path", () => {
     const path = server.getPath_test(from);
     assert.strictEqual(path, "/usr/bin/tracecompass-server");
   });
 
-  test("TraceServer should be able to get default arguments", () => {
+  test(prefix + "arguments", () => {
     const args = server.getArgs_test(from);
     assert.deepEqual(args, [""]);
   });
 
-  test("TraceServer should be able to get default url", () => {
+  test(prefix + "url", () => {
     const url = server.getUrl_test(from);
     assert.strictEqual(url, "http://localhost:8080");
   });
 
-  test("TraceServer should be able to get default apiPath", () => {
+  test(prefix + "apiPath", () => {
     const apiPath = server.getApiPath_test(from);
     assert.strictEqual(apiPath, "tsp/api");
   });

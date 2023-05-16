@@ -11,7 +11,9 @@ suite("Extension Test Suite", () => {
   const stop = extensionId + ".stop";
   const startIfStopped = extensionId + ".start-if-stopped";
 
-  test("Extension should be able to register " + start, () => {
+  const prefix = "Extension should be able to register ";
+
+  test(prefix + start, () => {
     let registered = false;
     extension.registerStart_test();
 
@@ -28,7 +30,7 @@ suite("Extension Test Suite", () => {
     });
   });
 
-  test("Extension should be able to register " + stop, () => {
+  test(prefix + stop, () => {
     let registered = false;
     extension.registerStop_test();
 
@@ -45,7 +47,7 @@ suite("Extension Test Suite", () => {
     });
   });
 
-  test("Extension should be able to register " + startIfStopped, () => {
+  test(prefix + startIfStopped, () => {
     let registered = false;
     extension.registerStartIfStopped_test();
 
