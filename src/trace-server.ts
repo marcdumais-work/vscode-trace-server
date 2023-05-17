@@ -27,8 +27,10 @@ export class TraceServer {
   }
 
   stop() {
-    if (this.server && this.server.pid) {
-      treeKill(this.server.pid);
+    if (this.server) {
+      if (this.server.pid) {
+        treeKill(this.server.pid);
+      }
       this.server = undefined;
     }
   }
@@ -98,6 +100,7 @@ export class TraceServer {
       }
       if (timeout) {
         console.error(prefix + "startup timed-out after " + millis + "ms.");
+        this.stop(); // Cleanly and readily for any next re-start.
         break;
       }
     }
