@@ -7,6 +7,8 @@ import * as vscode from "vscode";
 // -for naming consistency purposes across sibling extensions/settings:
 const section = "trace-compass.traceserver";
 
+const exit = "exit";
+const millis = 10000;
 const prefix = "Trace Server ";
 
 export class TraceServer {
@@ -27,12 +29,24 @@ export class TraceServer {
   }
 
   stop() {
-    if (this.server) {
-      if (this.server.pid) {
-        treeKill(this.server.pid);
-      }
-      this.server = undefined;
+    if (!this.server) {
+      return;
     }
+    if (this.server.pid) {
+      let id: NodeJS.Timeout;
+      this.server.once(exit, () => {
+        clearTimeout(id);
+      });
+      const message = prefix + "stopping failure or so.";
+      treeKill(this.server.pid, (error) => {
+        if (error) {
+          console.error(message);
+        } else {
+          id = setTimeout(() => console.error(message), millis);
+        }
+      });
+    }
+    this.server = undefined;
   }
 
   restart() {
@@ -86,7 +100,6 @@ export class TraceServer {
   private async waitFor(serverUrl: string) {
     this.client = new TspClient(serverUrl);
     let timeout = false;
-    const millis = 10000;
     const timeoutId = setTimeout(() => (timeout = true), millis);
 
     // eslint-disable-next-line no-constant-condition
@@ -95,7 +108,7 @@ export class TraceServer {
       const status = health.getModel()?.status;
 
       if (health.isOk() && status === "UP") {
-        this.server?.once("exit", () => {
+        this.server?.once(exit, () => {
           this.stop();
         });
         clearTimeout(timeoutId);

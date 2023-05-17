@@ -58,7 +58,7 @@ A nearby [companion extension][vscode-trace-extension] installation renders a `T
 1. Alternatively, exiting the application should automatically stop the started server if any.
 1. Now, `Trace Server: start (if stopped)` only starts the server if known as currently stopped.
 
-Currently, there are checks for if server startup was successful; `ps` can be used otherwise.
+The extension checks for proper server startup/stopping; `ps` or [TSP][tsp] can be used alongside.
 
 * `Trace Server: (re)start` can also be used if willing to stop then (re)start the server.
 * `Trace Server: (re)start` stops the previously started server if any; to use with care.
@@ -94,5 +94,6 @@ This extension is currently under [initial development][backlog].
 [server]: https://git.eclipse.org/r/plugins/gitiles/tracecompass.incubator/org.eclipse.tracecompass.incubator/+/refs/heads/master/trace-server/#running-the-server
 [sonarlint]: https://open-vsx.org/extension/SonarSource/sonarlint-vscode
 [theia]: https://theia-ide.org
+[tsp]: https://github.com/eclipse-cdt-cloud/trace-server-protocol
 [vsce]: https://code.visualstudio.com/api/working-with-extensions/publishing-extension#vsce
 [vscode-trace-extension]: https://github.com/eclipse-cdt-cloud/vscode-trace-extension
