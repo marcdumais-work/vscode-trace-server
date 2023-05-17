@@ -35,6 +35,7 @@ export class TraceServer {
     if (this.server.pid) {
       let id: NodeJS.Timeout;
       this.server.once(exit, () => {
+        this.setStatusIfAvailable(false);
         clearTimeout(id);
       });
       const pid = this.server.pid;
@@ -122,6 +123,7 @@ export class TraceServer {
           const status = health.getModel()?.status;
 
           if (health.isOk() && status === "UP") {
+            this.setStatusIfAvailable(true);
             this.server?.once(exit, () => {
               this.stop();
             });
@@ -138,5 +140,14 @@ export class TraceServer {
         }
       }
     );
+  }
+
+  private setStatusIfAvailable(started: boolean) {
+    const fromTraceExtension = "serverStatus";
+    if (started) {
+      vscode.commands.executeCommand(fromTraceExtension + ".started");
+    } else {
+      vscode.commands.executeCommand(fromTraceExtension + ".stopped");
+    }
   }
 }
