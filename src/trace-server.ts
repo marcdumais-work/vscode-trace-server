@@ -95,12 +95,15 @@ export class TraceServer {
       const status = health.getModel()?.status;
 
       if (health.isOk() && status === "UP") {
+        this.server?.once("exit", () => {
+          this.stop();
+        });
         clearTimeout(timeoutId);
         break;
       }
       if (timeout) {
         console.error(prefix + "startup timed-out after " + millis + "ms.");
-        this.stop(); // Cleanly and readily for any next re-start.
+        this.stop();
         break;
       }
     }
