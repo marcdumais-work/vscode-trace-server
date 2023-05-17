@@ -7,41 +7,38 @@ import * as vscode from "vscode";
 // -for naming consistency purposes across sibling extensions/settings:
 const section = "trace-compass.traceserver";
 
-const error = "error";
 const prefix = "Trace Server ";
 
 export class TraceServer {
   private server: ChildProcess | undefined;
   private client: TspClient | undefined;
 
-  private async start(): Promise<void> {
+  private start() {
     const from = vscode.workspace.getConfiguration(section);
     const server = spawn(this.getPath(from), this.getArgs(from));
 
     if (!server.pid) {
       console.error(prefix + "startup failure or so.");
-      return new Promise<never>((_, reject) => server.once(error, reject));
+      return;
     }
     this.server = server;
     const serverUrl = this.getUrl(from) + "/" + this.getApiPath(from);
     this.waitFor(serverUrl);
   }
 
-  async stop(): Promise<void> {
-    await new Promise<void>(() => {
-      if (this.server && this.server.pid) {
-        treeKill(this.server.pid);
-        this.server = undefined;
-      }
-    });
+  stop() {
+    if (this.server && this.server.pid) {
+      treeKill(this.server.pid);
+      this.server = undefined;
+    }
   }
 
-  async restart(): Promise<void> {
+  restart() {
     this.stop();
     this.start();
   }
 
-  async startIfStopped(): Promise<void> {
+  startIfStopped() {
     if (!this.server) {
       this.start();
     }
@@ -84,7 +81,7 @@ export class TraceServer {
   }
   getApiPath_test = this.getApiPath;
 
-  private async waitFor(serverUrl: string): Promise<void> {
+  private async waitFor(serverUrl: string) {
     this.client = new TspClient(serverUrl);
     let timeout = false;
     const millis = 10000;
@@ -101,9 +98,7 @@ export class TraceServer {
       }
       if (timeout) {
         console.error(prefix + "startup timed-out after " + millis + "ms.");
-        return new Promise<never>((_, reject) =>
-          this.server?.once(error, reject)
-        );
+        break;
       }
     }
   }
