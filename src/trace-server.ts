@@ -60,11 +60,6 @@ export class TraceServer {
     this.server = undefined;
   }
 
-  restart() {
-    this.stop();
-    this.start();
-  }
-
   startIfStopped() {
     if (!this.server) {
       this.start();

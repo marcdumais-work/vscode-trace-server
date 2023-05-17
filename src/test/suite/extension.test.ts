@@ -7,28 +7,10 @@ suite("Extension Test Suite", () => {
   vscode.window.showInformationMessage("Start extension tests.");
 
   const extensionId = "vscode-trace-server";
-  const start = extensionId + ".start";
   const stop = extensionId + ".stop";
   const startIfStopped = extensionId + ".start-if-stopped";
 
   const prefix = "Extension should be able to register ";
-
-  test(prefix + start, () => {
-    let registered = false;
-    extension.registerStart_test();
-
-    vscode.commands.getCommands(true).then(function (commands) {
-      for (const command in commands) {
-        if (command === start) {
-          registered = true;
-        }
-        if (registered) {
-          break;
-        }
-      }
-      assert.ok(registered);
-    });
-  });
 
   test(prefix + stop, () => {
     let registered = false;

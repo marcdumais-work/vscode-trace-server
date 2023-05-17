@@ -23,10 +23,6 @@
   "contributes": {
     "commands": [
       {
-        "command": "vscode-trace-server.start",
-        "title": "Trace Server: (re)start"
-      },
-      {
         "command": "vscode-trace-server.stop",
         "title": "Trace Server: stop"
       },
