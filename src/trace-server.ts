@@ -9,7 +9,7 @@ const section = "trace-compass.traceserver";
 
 const exit = "exit";
 const millis = 10000;
-const prefix = "Trace Server ";
+const prefix = "Trace Server";
 const suffix = " failure or so.";
 
 export class TraceServer {
@@ -21,7 +21,7 @@ export class TraceServer {
     const server = spawn(this.getPath(from), this.getArgs(from));
 
     if (!server.pid) {
-      console.error(prefix + "startup" + suffix);
+      console.error(prefix + " startup" + suffix);
       return;
     }
     this.server = server;
@@ -38,7 +38,7 @@ export class TraceServer {
       this.server.once(exit, () => {
         clearTimeout(id);
       });
-      const message = prefix + "stopping" + suffix;
+      const message = prefix + " stopping" + suffix;
       treeKill(this.server.pid, (error) => {
         if (error) {
           console.error(message);
@@ -99,27 +99,39 @@ export class TraceServer {
   getApiPath_test = this.getApiPath;
 
   private async waitFor(serverUrl: string) {
-    this.client = new TspClient(serverUrl);
-    let timeout = false;
-    const timeoutId = setTimeout(() => (timeout = true), millis);
+    vscode.window.withProgress(
+      {
+        location: vscode.ProgressLocation.Notification,
+        title: prefix,
+        cancellable: false,
+      },
+      async (progress) => {
+        progress.report({ message: "Starting up..." });
+        this.client = new TspClient(serverUrl);
+        let timeout = false;
+        const timeoutId = setTimeout(() => (timeout = true), millis);
 
-    // eslint-disable-next-line no-constant-condition
-    while (true) {
-      const health = await this.client.checkHealth();
-      const status = health.getModel()?.status;
+        // eslint-disable-next-line no-constant-condition
+        while (true) {
+          const health = await this.client.checkHealth();
+          const status = health.getModel()?.status;
 
-      if (health.isOk() && status === "UP") {
-        this.server?.once(exit, () => {
-          this.stop();
-        });
-        clearTimeout(timeoutId);
-        break;
+          if (health.isOk() && status === "UP") {
+            this.server?.once(exit, () => {
+              this.stop();
+            });
+            clearTimeout(timeoutId);
+            break;
+          }
+          if (timeout) {
+            console.error(
+              prefix + " startup timed-out after " + millis + "ms."
+            );
+            this.stop();
+            break;
+          }
+        }
       }
-      if (timeout) {
-        console.error(prefix + "startup timed-out after " + millis + "ms.");
-        this.stop();
-        break;
-      }
-    }
+    );
   }
 }
