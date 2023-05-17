@@ -55,7 +55,7 @@ export class TraceServer {
     }
     return path;
   }
-  public getPath_test = this.getPath;
+  getPath_test = this.getPath;
 
   private getArgs(configuration: vscode.WorkspaceConfiguration): string[] {
     let args = configuration.get<string>("arguments");
@@ -64,7 +64,7 @@ export class TraceServer {
     }
     return args.split(" ");
   }
-  public getArgs_test = this.getArgs;
+  getArgs_test = this.getArgs;
 
   private getUrl(configuration: vscode.WorkspaceConfiguration): string {
     let url = configuration.get<string>("url");
@@ -73,7 +73,7 @@ export class TraceServer {
     }
     return url;
   }
-  public getUrl_test = this.getUrl;
+  getUrl_test = this.getUrl;
 
   private getApiPath(configuration: vscode.WorkspaceConfiguration): string {
     let apiPath = configuration.get<string>("apiPath");
@@ -82,7 +82,7 @@ export class TraceServer {
     }
     return apiPath;
   }
-  public getApiPath_test = this.getApiPath;
+  getApiPath_test = this.getApiPath;
 
   private async waitFor(serverUrl: string): Promise<void> {
     this.client = new TspClient(serverUrl);
