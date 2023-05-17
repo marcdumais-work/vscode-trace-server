@@ -10,6 +10,7 @@ const section = "trace-compass.traceserver";
 const exit = "exit";
 const millis = 10000;
 const prefix = "Trace Server ";
+const suffix = " failure or so.";
 
 export class TraceServer {
   private server: ChildProcess | undefined;
@@ -20,7 +21,7 @@ export class TraceServer {
     const server = spawn(this.getPath(from), this.getArgs(from));
 
     if (!server.pid) {
-      console.error(prefix + "startup failure or so.");
+      console.error(prefix + "startup" + suffix);
       return;
     }
     this.server = server;
@@ -37,7 +38,7 @@ export class TraceServer {
       this.server.once(exit, () => {
         clearTimeout(id);
       });
-      const message = prefix + "stopping failure or so.";
+      const message = prefix + "stopping" + suffix;
       treeKill(this.server.pid, (error) => {
         if (error) {
           console.error(message);
