@@ -14,7 +14,6 @@ const suffix = " failure or so.";
 
 export class TraceServer {
   private server: ChildProcess | undefined;
-  private client: TspClient | undefined;
 
   private start() {
     const from = vscode.workspace.getConfiguration(section);
@@ -107,13 +106,13 @@ export class TraceServer {
       },
       async (progress) => {
         progress.report({ message: "Starting up..." });
-        this.client = new TspClient(serverUrl);
+        const client = new TspClient(serverUrl);
         let timeout = false;
         const timeoutId = setTimeout(() => (timeout = true), millis);
 
         // eslint-disable-next-line no-constant-condition
         while (true) {
-          const health = await this.client.checkHealth();
+          const health = await client.checkHealth();
           const status = health.getModel()?.status;
 
           if (health.isOk() && status === "UP") {
