@@ -37,14 +37,25 @@ export class TraceServer {
       this.server.once(exit, () => {
         clearTimeout(id);
       });
-      const message = prefix + " stopping" + suffix;
-      treeKill(this.server.pid, (error) => {
-        if (error) {
-          console.error(message);
-        } else {
-          id = setTimeout(() => console.error(message), millis);
+      const pid = this.server.pid;
+      vscode.window.withProgress(
+        {
+          location: vscode.ProgressLocation.Notification,
+          title: prefix,
+          cancellable: false,
+        },
+        async (progress) => {
+          progress.report({ message: "Stopping..." });
+          const message = prefix + " stopping" + suffix;
+          treeKill(pid, (error) => {
+            if (error) {
+              console.error(message);
+            } else {
+              id = setTimeout(() => console.error(message), millis);
+            }
+          });
         }
-      });
+      );
     }
     this.server = undefined;
   }
