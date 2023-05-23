@@ -62,6 +62,12 @@ The extension checks for proper server startup/stopping; `ps` or [TSP][tsp] can 
 
 * `Trace Server: stop` used upon no previously started server does nothing.
 
+## Debugging
+
+* One may launch the extension using `Run Extension`, to debug it with breakpoints, as usual.
+* The same can be done for tests, launching `Extension Tests` to debug them.
+* The enabled breakpoints get bound only upon exercising the extension.
+
 ## Development
 
 The usual [Prettier][prettier] and [ESLint][eslint] combo in VS Code or Codium OSS is used.
