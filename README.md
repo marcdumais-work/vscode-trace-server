@@ -45,7 +45,7 @@ A nearby [companion extension][vscode-trace-extension] installation renders a `T
 
 ## Configuration
 
-* Under the usual `Trace Compass` preference settings, the trace server `path` can be entered.
+* Under the `Trace Compass (Server)` preference settings, the trace server `path` can be entered.
   * Otherwise, the default `/usr/bin/tracecompass-server` is assumed locally.
 * Command-line `arguments` can be optionally set, [any of these if Incubator][server] server.
   * Multiple arguments have to be separated by a space character each.

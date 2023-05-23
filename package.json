@@ -32,7 +32,7 @@
       }
     ],
     "configuration": {
-      "title": "Trace Compass",
+      "title": "Trace Compass (Server)",
       "properties": {
         "trace-compass.traceserver.path": {
           "type": "string",
