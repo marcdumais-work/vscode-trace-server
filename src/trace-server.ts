@@ -43,7 +43,7 @@ export class TraceServer {
                 {
                     location: vscode.ProgressLocation.Notification,
                     title: prefix,
-                    cancellable: false,
+                    cancellable: false
                 },
                 async progress => {
                     progress.report({ message: 'Stopping...' });
@@ -109,7 +109,7 @@ export class TraceServer {
             {
                 location: vscode.ProgressLocation.Notification,
                 title: prefix,
-                cancellable: false,
+                cancellable: false
             },
             async progress => {
                 progress.report({ message: 'Starting up...' });
