@@ -45,10 +45,10 @@ export class TraceServer {
           title: prefix,
           cancellable: false,
         },
-        async (progress) => {
+        async progress => {
           progress.report({ message: "Stopping..." });
           const message = prefix + " stopping" + suffix;
-          treeKill(pid, (error) => {
+          treeKill(pid, error => {
             if (error) {
               console.error(message);
             } else {
@@ -111,7 +111,7 @@ export class TraceServer {
         title: prefix,
         cancellable: false,
       },
-      async (progress) => {
+      async progress => {
         progress.report({ message: "Starting up..." });
         const client = new TspClient(serverUrl);
         let timeout = false;
