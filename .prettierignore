@@ -1,2 +1,7 @@
-build
+# LC_COLLATE=C sort .prettierignore
 #coverage
+/*.md
+/.vscode-test/
+/dist/
+/node_modules/
+/out/
