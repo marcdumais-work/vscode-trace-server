@@ -1,31 +1,31 @@
-import * as assert from "assert";
-import * as vscode from "vscode";
-import { TraceServer } from "../../trace-server";
+import * as assert from 'assert';
+import * as vscode from 'vscode';
+import { TraceServer } from '../../trace-server';
 
-suite("TraceServer Test Suite", () => {
-  vscode.window.showInformationMessage("Start trace-server tests.");
+suite('TraceServer Test Suite', () => {
+  vscode.window.showInformationMessage('Start trace-server tests.');
 
-  const from = vscode.workspace.getConfiguration("trace-compass.traceserver");
+  const from = vscode.workspace.getConfiguration('trace-compass.traceserver');
   const server = new TraceServer();
-  const prefix = "TraceServer should be able to get default ";
+  const prefix = 'TraceServer should be able to get default ';
 
-  test(prefix + "path", () => {
+  test(prefix + 'path', () => {
     const path = server.getPath_test(from);
-    assert.strictEqual(path, "/usr/bin/tracecompass-server");
+    assert.strictEqual(path, '/usr/bin/tracecompass-server');
   });
 
-  test(prefix + "arguments", () => {
+  test(prefix + 'arguments', () => {
     const args = server.getArgs_test(from);
-    assert.deepEqual(args, [""]);
+    assert.deepEqual(args, ['']);
   });
 
-  test(prefix + "url", () => {
+  test(prefix + 'url', () => {
     const url = server.getUrl_test(from);
-    assert.strictEqual(url, "http://localhost:8080");
+    assert.strictEqual(url, 'http://localhost:8080');
   });
 
-  test(prefix + "apiPath", () => {
+  test(prefix + 'apiPath', () => {
     const apiPath = server.getApiPath_test(from);
-    assert.strictEqual(apiPath, "tsp/api");
+    assert.strictEqual(apiPath, 'tsp/api');
   });
 });

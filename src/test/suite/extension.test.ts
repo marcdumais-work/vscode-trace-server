@@ -1,16 +1,16 @@
-import * as assert from "assert";
-import * as vscode from "vscode";
-import * as extension from "../../extension";
+import * as assert from 'assert';
+import * as vscode from 'vscode';
+import * as extension from '../../extension';
 
 // First generated from https://code.visualstudio.com/api/get-started/your-first-extension
-suite("Extension Test Suite", () => {
-  vscode.window.showInformationMessage("Start extension tests.");
+suite('Extension Test Suite', () => {
+  vscode.window.showInformationMessage('Start extension tests.');
 
-  const extensionId = "vscode-trace-server";
-  const stop = extensionId + ".stop";
-  const startIfStopped = extensionId + ".start-if-stopped";
+  const extensionId = 'vscode-trace-server';
+  const stop = extensionId + '.stop';
+  const startIfStopped = extensionId + '.start-if-stopped';
 
-  const prefix = "Extension should be able to register ";
+  const prefix = 'Extension should be able to register ';
 
   test(prefix + stop, () => {
     let registered = false;
