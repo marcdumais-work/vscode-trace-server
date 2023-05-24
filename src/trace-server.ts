@@ -131,9 +131,7 @@ export class TraceServer {
             break;
           }
           if (timeout) {
-            console.error(
-              prefix + " startup timed-out after " + millis + "ms."
-            );
+            console.error(prefix + " startup timed-out after " + millis + "ms.");
             this.stop();
             break;
           }
