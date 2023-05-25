@@ -37,8 +37,8 @@ Alternatively, launch `Extension Tests` under `Run and Debug`.
 
 This extension can be installed in either one (or many) of:
 
-* [VS Code][code] or [Codium][codium], or
-* a [Theia][theia] application or [Blueprint][blueprint].
+* [VS Code][code] or [Codium][codium]/Code-OSS, or
+* a [Theia][theia] application such as [Blueprint][blueprint].
 
 A nearby [companion extension][vscode-trace-extension] installation renders a `Trace Server`
 [status bar item][item].
