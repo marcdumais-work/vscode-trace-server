@@ -41,7 +41,13 @@ This extension can be installed in either one (or many) of:
 * a [Theia][theia] application such as [Blueprint][blueprint].
 
 A nearby [companion extension][vscode-trace-extension] installation renders a `Trace Server`
-[status bar item][item].
+[status bar item][item]. A note:
+
+* [Theia Blueprint][blueprint] extracts installed extensions under `/tmp/vscode-unpacked/`.
+* Reinstalling an amended extension with the same version requires removing that extraction.
+* This is necessary beside uninstalling the extension from the Theia UI, that is.
+* Without this manual extension directory removal, Blueprint won't use the amended version.
+* Stepping the extension version upon an amend or update shouldn't trigger that issue.
 
 ## Configuration
 
