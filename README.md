@@ -78,7 +78,7 @@ The usual [Prettier][prettier] and [ESLint][eslint] combo in VS Code or Codium O
 
 These are actual [recommended extensions herein](.vscode/extensions.json).
 
-* Beside using [the extension][prettier], one may run `yarn prettier --write .` (or `--check`) locally.
+* Beside using [the extension][prettier], one may run `yarn prettier --write .` (or `--check`).
 
 ## Status
 
