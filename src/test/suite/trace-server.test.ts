@@ -5,7 +5,7 @@ import { TraceServer } from '../../trace-server';
 suite('TraceServer Test Suite', () => {
     vscode.window.showInformationMessage('Start trace-server tests.');
 
-    const from = vscode.workspace.getConfiguration('trace-compass.traceserver');
+    const from = vscode.workspace.getConfiguration('trace-server.traceserver');
     const server = new TraceServer();
     const prefix = 'TraceServer should be able to get default ';
 
