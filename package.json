@@ -48,6 +48,7 @@
     },
     "scripts": {
         "prepare": "yarn run compile",
+        "vsce:package": "vsce package --yarn",
         "vscode:prepublish": "yarn run package",
         "compile": "webpack",
         "watch": "webpack --watch",
@@ -76,6 +77,7 @@
         "prettier": "2.8.8",
         "ts-loader": "^9.4.2",
         "typescript": "^5.0.4",
+        "vsce": "^2.15.0",
         "webpack": "^5.81.0",
         "webpack-cli": "^5.0.2"
     }

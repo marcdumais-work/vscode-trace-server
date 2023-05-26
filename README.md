@@ -30,7 +30,7 @@ Alternatively, launch `Extension Tests` under `Run and Debug`.
 
 ## Installation
 
-1. Follow [these instructions][vsce] once to run `vsce package` at will.
+1. After [having built](#build) at least once, run `yarn vsce:package` ([more][vsce]) at will.
 1. [Install][install] the hereby generated `vscode-trace-server-*.vsix` file.
 1. Alternatively, simply launch the packaged extension using `Run Extension`.
 1. Through `Command Palette`, the `Trace Server:` start/stop commands should be available.
