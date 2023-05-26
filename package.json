@@ -47,6 +47,7 @@
         }
     },
     "scripts": {
+        "prepare": "yarn run compile",
         "vscode:prepublish": "yarn run package",
         "compile": "webpack",
         "watch": "webpack --watch",
