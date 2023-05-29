@@ -12,7 +12,7 @@ export function activate(context: vscode.ExtensionContext) {
 }
 
 export function deactivate() {
-    vscode.commands.executeCommand(stop);
+    server.stop();
 }
 
 function registerStop(): vscode.Disposable {
