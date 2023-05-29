@@ -3,28 +3,31 @@ import { TraceServer } from './trace-server';
 
 const server = new TraceServer();
 const extensionId = 'vscode-trace-server';
-const stop = extensionId + '.stop';
+const stopOrReset = extensionId + '.stop-or-reset';
 const startIfStopped = extensionId + '.start-if-stopped';
 
+let activation: vscode.ExtensionContext;
+
 export function activate(context: vscode.ExtensionContext) {
-    context.subscriptions.push(registerStop());
-    context.subscriptions.push(registerStartIfStopped());
+    context.subscriptions.push(registerStopOrReset(context));
+    context.subscriptions.push(registerStartIfStopped(context));
+    activation = context;
 }
 
 export function deactivate() {
-    server.stop();
+    server.stopOrReset(activation);
 }
 
-function registerStop(): vscode.Disposable {
-    return vscode.commands.registerCommand(stop, () => {
-        return server.stop();
+function registerStopOrReset(context: vscode.ExtensionContext | undefined): vscode.Disposable {
+    return vscode.commands.registerCommand(stopOrReset, () => {
+        return server.stopOrReset(context);
     });
 }
-export const registerStop_test = registerStop;
+export const registerStopOrReset_test = registerStopOrReset;
 
-function registerStartIfStopped(): vscode.Disposable {
+function registerStartIfStopped(context: vscode.ExtensionContext | undefined): vscode.Disposable {
     return vscode.commands.registerCommand(startIfStopped, () => {
-        server.startIfStopped();
+        server.startIfStopped(context);
     });
 }
 export const registerStartIfStopped_test = registerStartIfStopped;

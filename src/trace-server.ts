@@ -8,14 +8,16 @@ import * as vscode from 'vscode';
 const section = 'trace-server.traceserver';
 
 const exit = 'exit';
+const key = 'pid';
 const millis = 10000;
+const none = -1;
 const prefix = 'Trace Server';
 const suffix = ' failure or so.';
 
 export class TraceServer {
     private server: ChildProcess | undefined;
 
-    private start() {
+    private start(context: vscode.ExtensionContext | undefined) {
         const from = vscode.workspace.getConfiguration(section);
         const server = spawn(this.getPath(from), this.getArgs(from));
 
@@ -24,21 +26,25 @@ export class TraceServer {
             return;
         }
         this.server = server;
+        context?.workspaceState.update(key, this.server.pid);
         const serverUrl = this.getUrl(from) + '/' + this.getApiPath(from);
-        this.waitFor(serverUrl);
+        this.waitFor(serverUrl, context);
     }
 
-    stop() {
-        if (!this.server) {
+    stopOrReset(context: vscode.ExtensionContext | undefined) {
+        const pid: number | undefined = context?.workspaceState.get(key);
+        if (pid === none) {
             return;
         }
-        if (this.server.pid) {
+        if (pid) {
             let id: NodeJS.Timeout;
-            this.server.once(exit, () => {
-                this.setStatusIfAvailable(false);
-                clearTimeout(id);
-            });
-            const pid = this.server.pid;
+            // recovering from workspaceState => no this.server set
+            if (this.server) {
+                this.server.once(exit, () => {
+                    this.setStatusIfAvailable(false);
+                    clearTimeout(id);
+                });
+            }
             vscode.window.withProgress(
                 {
                     location: vscode.ProgressLocation.Notification,
@@ -58,12 +64,15 @@ export class TraceServer {
                 }
             );
         }
+        context?.workspaceState.update(key, none);
         this.server = undefined;
     }
 
-    startIfStopped() {
-        if (!this.server) {
-            this.start();
+    startIfStopped(context: vscode.ExtensionContext | undefined) {
+        const pid = context?.workspaceState.get(key);
+        const stopped = !pid || pid === none;
+        if (stopped) {
+            this.start(context);
         }
     }
 
@@ -104,7 +113,7 @@ export class TraceServer {
     }
     getApiPath_test = this.getApiPath;
 
-    private async waitFor(serverUrl: string) {
+    private async waitFor(serverUrl: string, context: vscode.ExtensionContext | undefined) {
         vscode.window.withProgress(
             {
                 location: vscode.ProgressLocation.Notification,
@@ -125,14 +134,14 @@ export class TraceServer {
                     if (health.isOk() && status === 'UP') {
                         this.setStatusIfAvailable(true);
                         this.server?.once(exit, () => {
-                            this.stop();
+                            this.stopOrReset(context);
                         });
                         clearTimeout(timeoutId);
                         break;
                     }
                     if (timeout) {
                         console.error(prefix + ' startup timed-out after ' + millis + 'ms.');
-                        this.stop();
+                        this.stopOrReset(context);
                         break;
                     }
                 }

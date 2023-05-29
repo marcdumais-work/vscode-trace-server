@@ -60,13 +60,14 @@ A nearby [companion extension][vscode-trace-extension] installation renders a `T
 
 1. Use the `Trace Server: start (if stopped)` command to launch the trace server instance.
 1. The latter should be made of two related processes; `grep` for `tracecompass` or the like.
-1. Use the `Trace Server: stop` command once ready to kill both processes, stopping the server.
+1. Use the `Trace Server: stop or reset` command to kill both processes, stopping the server.
 1. Alternatively, exiting the application should automatically stop the started server if any.
 1. Now, `Trace Server: start (if stopped)` only starts the server if known as currently stopped.
 
 The extension checks for proper server startup/stopping; `ps` or [TSP][tsp] can be used alongside.
 
-* `Trace Server: stop` used upon no previously started server does nothing.
+* `Trace Server: stop or reset` resets the known `pid` to none, if stopped outside of the extension.
+* `Trace Server: stop or reset` used upon no previously started server (known `pid`) does nothing.
 
 ## Debugging
 
