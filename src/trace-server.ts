@@ -41,7 +41,7 @@ export class TraceServer {
             // recovering from workspaceState => no this.server set
             if (this.server) {
                 this.server.once(exit, () => {
-                    this.setStatusIfAvailable(false);
+                    this.showStatus(false);
                     clearTimeout(id);
                 });
             }
@@ -132,7 +132,7 @@ export class TraceServer {
                     const status = health.getModel()?.status;
 
                     if (health.isOk() && status === 'UP') {
-                        this.setStatusIfAvailable(true);
+                        this.showStatus(true);
                         this.server?.once(exit, () => {
                             this.stopOrReset(context);
                         });
@@ -147,6 +147,15 @@ export class TraceServer {
                 }
             }
         );
+    }
+
+    private showStatus(started: boolean) {
+        if (started) {
+            vscode.window.showInformationMessage(prefix + ': Started.');
+        } else {
+            vscode.window.showInformationMessage(prefix + ': Stopped.');
+        }
+        this.setStatusIfAvailable(started);
     }
 
     private setStatusIfAvailable(started: boolean) {
