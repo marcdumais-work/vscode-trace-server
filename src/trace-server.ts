@@ -22,7 +22,7 @@ export class TraceServer {
         const server = spawn(this.getPath(from), this.getArgs(from));
 
         if (!server.pid) {
-            console.error(prefix + ' startup' + suffix);
+            this.showError(prefix + ' startup' + suffix);
             return;
         }
         this.server = server;
@@ -56,9 +56,9 @@ export class TraceServer {
                     const message = prefix + ' stopping' + suffix;
                     treeKill(pid, error => {
                         if (error) {
-                            console.error(message);
+                            this.showError(message);
                         } else {
-                            id = setTimeout(() => console.error(message), millis);
+                            id = setTimeout(() => this.showError(message), millis);
                         }
                     });
                 }
@@ -140,13 +140,18 @@ export class TraceServer {
                         break;
                     }
                     if (timeout) {
-                        console.error(prefix + ' startup timed-out after ' + millis + 'ms.');
+                        this.showError(prefix + ' startup timed-out after ' + millis + 'ms.');
                         this.stopOrReset(context);
                         break;
                     }
                 }
             }
         );
+    }
+
+    private showError(message: string) {
+        console.error(message);
+        vscode.window.showErrorMessage(message);
     }
 
     private showStatus(started: boolean) {
