@@ -60,6 +60,7 @@
         "test": "node ./out/test/runTest.js"
     },
     "dependencies": {
+        "@vscode/vsce": "^2.19.0",
         "tree-kill": "^1.2.2",
         "tsp-typescript-client": "next"
     },
