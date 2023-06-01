@@ -32,7 +32,9 @@ export class TraceServer {
 
     stopOrReset(context: vscode.ExtensionContext | undefined) {
         const pid: number | undefined = context?.workspaceState.get(key);
+        const not = prefix + ' not stopped as none running or owned by us.';
         if (pid === none) {
+            vscode.window.showWarningMessage(not);
             return;
         }
         if (pid) {
@@ -62,6 +64,8 @@ export class TraceServer {
                     });
                 }
             );
+        } else {
+            vscode.window.showWarningMessage(not);
         }
         context?.workspaceState.update(key, none);
         this.server = undefined;
@@ -73,6 +77,8 @@ export class TraceServer {
         const foreigner = await this.isUp();
         if (stopped && !foreigner) {
             this.start(context);
+        } else {
+            vscode.window.showWarningMessage(prefix + ' not started as already running.');
         }
     }
 
