@@ -18,7 +18,7 @@ export class TraceServer {
     private server: ChildProcess | undefined;
 
     private start(context: vscode.ExtensionContext | undefined) {
-        const from = vscode.workspace.getConfiguration(section);
+        const from = this.getSettings();
         const server = spawn(this.getPath(from), this.getArgs(from));
 
         if (!server.pid) {
@@ -27,8 +27,7 @@ export class TraceServer {
         }
         this.server = server;
         context?.workspaceState.update(key, this.server.pid);
-        const serverUrl = this.getUrl(from) + '/' + this.getApiPath(from);
-        this.waitFor(serverUrl, context);
+        this.waitFor(context);
     }
 
     stopOrReset(context: vscode.ExtensionContext | undefined) {
@@ -113,7 +112,16 @@ export class TraceServer {
     }
     getApiPath_test = this.getApiPath;
 
-    private async waitFor(serverUrl: string, context: vscode.ExtensionContext | undefined) {
+    private getSettings() {
+        return vscode.workspace.getConfiguration(section);
+    }
+
+    private getServerUrl() {
+        const from = this.getSettings();
+        return this.getUrl(from) + '/' + this.getApiPath(from);
+    }
+
+    private async waitFor(context: vscode.ExtensionContext | undefined) {
         vscode.window.withProgress(
             {
                 location: vscode.ProgressLocation.Notification,
@@ -127,7 +135,7 @@ export class TraceServer {
 
                 // eslint-disable-next-line no-constant-condition
                 while (true) {
-                    if (await this.isUp(serverUrl)) {
+                    if (await this.isUp()) {
                         this.showStatus(true);
                         this.server?.once(exit, () => {
                             this.stopOrReset(context);
@@ -145,8 +153,8 @@ export class TraceServer {
         );
     }
 
-    private async isUp(serverUrl: string) {
-        const client = new TspClient(serverUrl);
+    private async isUp() {
+        const client = new TspClient(this.getServerUrl());
         const health = await client.checkHealth();
         const status = health.getModel()?.status;
         return health.isOk() && status === 'UP';
