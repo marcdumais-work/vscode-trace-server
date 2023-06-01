@@ -7,7 +7,6 @@ import * as vscode from 'vscode';
 // -for naming consistency purposes across sibling extensions/settings:
 const section = 'trace-server.traceserver';
 
-const exit = 'exit';
 const key = 'pid';
 const millis = 10000;
 const none = -1;
@@ -41,7 +40,7 @@ export class TraceServer {
             let id: NodeJS.Timeout;
             // recovering from workspaceState => no this.server set
             if (this.server) {
-                this.server.once(exit, () => {
+                this.server.once('exit', () => {
                     this.showStatus(false);
                     clearTimeout(id);
                 });
@@ -144,9 +143,6 @@ export class TraceServer {
                 while (true) {
                     if (await this.isUp()) {
                         this.showStatus(true);
-                        this.server?.once(exit, () => {
-                            this.stopOrReset(context);
-                        });
                         clearTimeout(timeoutId);
                         break;
                     }
