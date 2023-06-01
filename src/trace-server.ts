@@ -122,16 +122,12 @@ export class TraceServer {
             },
             async progress => {
                 progress.report({ message: 'Starting up...' });
-                const client = new TspClient(serverUrl);
                 let timeout = false;
                 const timeoutId = setTimeout(() => (timeout = true), millis);
 
                 // eslint-disable-next-line no-constant-condition
                 while (true) {
-                    const health = await client.checkHealth();
-                    const status = health.getModel()?.status;
-
-                    if (health.isOk() && status === 'UP') {
+                    if (await this.isUp(serverUrl)) {
                         this.showStatus(true);
                         this.server?.once(exit, () => {
                             this.stopOrReset(context);
@@ -147,6 +143,13 @@ export class TraceServer {
                 }
             }
         );
+    }
+
+    private async isUp(serverUrl: string) {
+        const client = new TspClient(serverUrl);
+        const health = await client.checkHealth();
+        const status = health.getModel()?.status;
+        return health.isOk() && status === 'UP';
     }
 
     private showError(message: string) {
