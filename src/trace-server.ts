@@ -67,10 +67,11 @@ export class TraceServer {
         this.server = undefined;
     }
 
-    startIfStopped(context: vscode.ExtensionContext | undefined) {
+    async startIfStopped(context: vscode.ExtensionContext | undefined) {
         const pid = context?.workspaceState.get(key);
         const stopped = !pid || pid === none;
-        if (stopped) {
+        const foreigner = await this.isUp();
+        if (stopped && !foreigner) {
             this.start(context);
         }
     }
