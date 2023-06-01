@@ -74,10 +74,16 @@ export class TraceServer {
         const pid = context?.workspaceState.get(key);
         const stopped = !pid || pid === none;
         const foreigner = await this.isUp();
+
         if (stopped && !foreigner) {
             this.start(context);
-        } else {
+        } else if (foreigner) {
             vscode.window.showWarningMessage(prefix + ' not started as already running.');
+        } else {
+            // Not UP but there is still a pid stored.
+            // Likely because Codium or so exited without one using the stop command prior.
+            context?.workspaceState.update(key, none);
+            this.start(context);
         }
     }
 
