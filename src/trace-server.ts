@@ -29,14 +29,14 @@ export class TraceServer {
         this.waitFor(context);
     }
 
-    stopOrReset(context: vscode.ExtensionContext | undefined) {
+    async stopOrReset(context: vscode.ExtensionContext | undefined) {
         const pid: number | undefined = context?.workspaceState.get(key);
         const not = prefix + ' not stopped as none running or owned by us.';
         if (pid === none) {
             vscode.window.showWarningMessage(not);
             return;
         }
-        if (pid) {
+        if (pid && (await this.isUp())) {
             let id: NodeJS.Timeout;
             // recovering from workspaceState => no this.server set
             if (this.server) {
