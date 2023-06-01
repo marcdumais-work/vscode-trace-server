@@ -53,7 +53,7 @@ export class TraceServer {
                 },
                 async progress => {
                     progress.report({ message: 'Stopping...' });
-                    const message = prefix + ' stopping' + suffix;
+                    const message = prefix + ' stopping' + suffix + ' Resetting.';
                     treeKill(pid, error => {
                         if (error) {
                             this.showError(message);
