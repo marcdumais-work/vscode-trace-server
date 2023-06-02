@@ -169,9 +169,17 @@ export class TraceServer {
         return health.isOk() && status === 'UP';
     }
 
-    private showError(message: string) {
+    private async showError(message: string) {
         console.error(message);
         vscode.window.showErrorMessage(message);
+        const disclaimer = ' running, despite this error.';
+        const up = await this.isUp();
+        if (up) {
+            vscode.window.showWarningMessage(prefix + ' is still' + disclaimer);
+        } else {
+            vscode.window.showWarningMessage(prefix + ' is not' + disclaimer);
+        }
+        this.setStatusIfAvailable(up);
     }
 
     private showStatus(started: boolean) {
