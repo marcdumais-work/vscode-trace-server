@@ -56,7 +56,7 @@ export class TraceServer {
                     const message = prefix + ' stopping' + suffix + ' Resetting.';
                     treeKill(pid, error => {
                         if (error) {
-                            this.showError(message);
+                            this.showErrorDetailed(message, error);
                         } else {
                             id = setTimeout(() => this.showError(message), millis);
                         }
@@ -180,6 +180,13 @@ export class TraceServer {
             vscode.window.showWarningMessage(prefix + ' is not' + disclaimer);
         }
         this.setStatusIfAvailable(up);
+    }
+
+    private showErrorDetailed(message: string, error: Error) {
+        const details = error.name + ' - ' + error.message;
+        vscode.window.showErrorMessage(details);
+        console.error(details);
+        this.showError(message);
     }
 
     private showStatus(started: boolean) {
