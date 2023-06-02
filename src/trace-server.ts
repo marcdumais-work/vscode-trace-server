@@ -52,7 +52,7 @@ export class TraceServer {
                     cancellable: false
                 },
                 async progress => {
-                    progress.report({ message: 'Stopping...' });
+                    progress.report({ message: 'stopping...' });
                     const message = prefix + ' stopping' + suffix + ' Resetting.';
                     treeKill(pid, error => {
                         if (error) {
@@ -141,7 +141,7 @@ export class TraceServer {
                 cancellable: false
             },
             async progress => {
-                progress.report({ message: 'Starting up...' });
+                progress.report({ message: 'starting up...' });
                 let timeout = false;
                 const timeoutId = setTimeout(() => (timeout = true), millis);
 
@@ -191,9 +191,9 @@ export class TraceServer {
 
     private showStatus(started: boolean) {
         if (started) {
-            vscode.window.showInformationMessage(prefix + ': Started.');
+            vscode.window.showInformationMessage(prefix + ' started.');
         } else {
-            vscode.window.showInformationMessage(prefix + ': Stopped.');
+            vscode.window.showInformationMessage(prefix + ' stopped.');
         }
         this.setStatusIfAvailable(started);
     }
