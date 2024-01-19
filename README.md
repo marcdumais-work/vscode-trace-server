@@ -20,7 +20,7 @@ This README is the usual entry point for documenting this extension.
 Run `yarn`, which should automatically include `yarn install`.
 
 * This extension is bundled using `webpack`, originally based on [the guide][guide].
-* There is no support yet for any automated CI on GitHub; planned for though.
+* There is only a modest automated CI test suite being run on GitHub
 
 ## Test
 
