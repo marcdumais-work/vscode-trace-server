@@ -57,13 +57,16 @@
         "watch-tests": "tsc -p . -w --outDir out",
         "pretest": "yarn run compile-tests && yarn run compile && yarn run lint",
         "lint": "eslint src --ext ts",
-        "test": "node ./out/test/runTest.js"
+        "test": "node ./out/test/runTest.js",
+        "license:check": "npx dash-licenses-wrapper  --configFile=./configs/license-check-config.json",
+        "license:check:review": "npx dash-licenses-wrapper  --configFile=./configs/license-check-config.json --review"
     },
     "dependencies": {
         "tree-kill": "^1.2.2",
         "tsp-typescript-client": "next"
     },
     "devDependencies": {
+        "@eclipse-dash/nodejs-wrapper": "^0.0.1",
         "@types/glob": "^8.1.0",
         "@types/mocha": "^10.0.1",
         "@types/node": "16.x",
