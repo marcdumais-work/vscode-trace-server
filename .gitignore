@@ -4,3 +4,4 @@
 /node_modules/
 /out/
 /vscode-trace-server-*.vsix
+license-check-summary.txt*
