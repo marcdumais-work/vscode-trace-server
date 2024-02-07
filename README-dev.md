@@ -1,6 +1,6 @@
 # VSCode Trace Server extension
 
-This file contains information that could be interesting to developers, that want to mnodify, build, test, and debug this extension. 
+This file contains information that could be interesting to developers, that want to modify, build, test, and debug this extension.
 
 For general information, see the main [README.md](README.md)
 
@@ -81,9 +81,6 @@ yarn format:write
 
 ```
 
-## Status
-
-This extension is currently under [initial development][backlog].
 
 [backlog]: https://github.com/eclipse-cdt-cloud/vscode-trace-extension/issues/15
 [blueprint]: https://theia-ide.org/docs/blueprint_download

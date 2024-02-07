@@ -1,9 +1,12 @@
 # VSCode Trace Server extension
 
-This is a companion extension to the Trace Viewer for VSCode. It makes it easier to control a default local TSP ([Trace Server Protocol][tsp]) enabled trace server, by providing `Trace Server:` start/stop commands.
+This is a companion extension to the Trace Viewer for VSCode, that helps you manage the life-cycle (starting/stopping) of the trace server, that it needs to analyze and open traces.
 
-For development information, please see the developers [README][dev-readme]
+The extension, once [configured](#configuration), can automatically start and stop your trace server for you, letting you enjoy using the Trace Viewer, without having to worry about that aspect. It also registers VSCode `Trace Server:` start/stop commands, that you can invoke as needed.
 
+Note: It's assumed you already have a trace server installed locally. If that's not yet the case, please see [here](https://github.com/eclipse-cdt-cloud/vscode-trace-extension/blob/master/vscode-trace-extension/README.md#obtain-the-trace-server-eclipse-trace-compass) for more details about obtaining and installing the Eclipse Trace Compass server.
+
+For information about building this extension from source, debugging it, and so on, please see the developer's documentation: [README-dev][dev-readme]
 
 ## Configuration
 
@@ -18,7 +21,15 @@ The following preference settings can be used, under `Trace Server`.
 
 ### Starting the Trace Server
 
-Use the `Trace Server: start (if stopped)` command to launch the trace server instance. The latter should be made of two related processes; `grep` for `tracecompass` or the like.
+Automatic start:
+
+If this extension is configured correctly, it will automatically start the trace server, if needed, upon a trace being opened in the trace viewer.
+
+Manual start:
+
+Use the `Trace Server: start (if stopped)` command to launch the trace server instance. The latter should be made of two related processes; to find them, `grep` for `tracecompass` or the like.
+
+Note: this extension is only aware of a running trace server if it started of helped start it, as per above. It will not know if you started the server on the CLI or outside using other means than described above.
 
 ### Stopping the Trace Server
 
