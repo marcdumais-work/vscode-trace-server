@@ -1,19 +1,32 @@
 {
     "name": "vscode-trace-server",
-    "displayName": "VsCode Trace Server",
-    "description": "VsCode extension for executing a trace server",
+    "displayName": "VSCode Trace Server",
+    "description": "Companion extension to the Trace Viewer for VSCode, that makes it easier to start/stop a local trace server",
     "version": "0.1.0",
+    "license": "MIT",
     "engines": {
         "vscode": "^1.78.0"
     },
-    "publisher": "tracecompass-community",
+    "publisher": "eclipse-cdt",
+    "icon": "assets/extension-icon.png",
     "categories": [
+        "Visualization",
+        "Data Science",
         "Other"
     ],
-    "license": "MIT",
+    "keywords": [
+        "Trace Compass",
+        "trace",
+        "visualization",
+        "companion",
+        "Eclipse Foundation"
+    ],
     "repository": {
         "type": "git",
         "url": "https://github.com/eclipse-cdt-cloud/vscode-trace-server.git"
+    },
+    "bugs": {
+        "url": "https://github.com/eclipse-cdt-cloud/vscode-trace-server/issues"
     },
     "activationEvents": [
         "onStartupFinished"
@@ -59,6 +72,8 @@
         "watch-tests": "tsc -p . -w --outDir out",
         "pretest": "yarn run compile-tests && yarn run compile && yarn run lint",
         "lint": "eslint src --ext ts",
+        "format:write": "prettier --write ./src",
+        "format:check": "prettier --check ./src",
         "test": "node ./out/test/runTest.js",
         "license:check": "npx dash-licenses-wrapper  --configFile=./configs/license-check-config.json",
         "license:check:review": "npx dash-licenses-wrapper  --configFile=./configs/license-check-config.json --review"

@@ -1,112 +1,47 @@
 # VSCode Trace Server extension
 
-* This is a TypeScript extension, officially named `vscode-trace-server`.
-* It is meant as companion to the [vscode-trace-extension][vscode-trace-extension].
-* It registers `Trace Server:` start/stop commands, for a default instance locally.
-* It depends on the [tsp-typescript-client][client] for server health check purposes.
+This is a companion extension to the Trace Viewer for VSCode, that helps you manage the life-cycle (starting/stopping) of the trace server, that it needs to analyze and open traces.
 
-This extension was started from Code's [guide][guide] and related [sample][sample].
+The extension, once [configured](#configuration), can automatically start and stop your trace server for you, letting you enjoy using the Trace Viewer, without having to worry about that aspect. It also registers VSCode `Trace Server:` start/stop commands, that you can invoke as needed.
 
-## Documentation
+Note: It's assumed you already have a trace server installed locally. If that's not yet the case, please see [here](https://github.com/eclipse-cdt-cloud/vscode-trace-extension/blob/master/vscode-trace-extension/README.md#obtain-the-trace-server-eclipse-trace-compass) for more details about obtaining and installing the Eclipse Trace Compass server.
 
-This README is the usual entry point for documenting this extension.
-
-* One may refer to the [contribution guide](CONTRIBUTING.md) for how to contribute.
-* Please also refer to the [security policy](SECURITY.md) on a need basis.
-* The usual [license description](LICENSE.md) file accompanies these too.
-
-## Build
-
-Run `yarn`, which should automatically include `yarn install`.
-
-* This extension is bundled using `webpack`, originally based on [the guide][guide].
-* There is only a modest automated CI test suite being run on GitHub
-
-## Test
-
-Run `yarn test` on a need basis.
-
-Alternatively, launch `Extension Tests` under `Run and Debug`.
-
-## Installation
-
-1. After [having built](#build) at least once, run `yarn vsce:package` ([more][vsce]) at will.
-1. [Install][install] the hereby generated `vscode-trace-server-*.vsix` file.
-1. Alternatively, simply launch the packaged extension using `Run Extension`.
-1. Through `Command Palette`, the `Trace Server:` start/stop commands should be available.
-
-This extension can be installed in either one (or many) of:
-
-* [VS Code][code] or [Codium][codium]/Code-OSS, or
-* a [Theia][theia] application such as [Blueprint][blueprint].
-
-A nearby [companion extension][vscode-trace-extension] installation renders a `Trace Server`
-[status bar item][item]. A note:
-
-* [Theia Blueprint][blueprint] extracts installed extensions under `/tmp/vscode-unpacked/`.
-* Reinstalling an amended extension with the same version requires removing that extraction.
-* This is necessary beside uninstalling the extension from the Theia UI, that is.
-* Without this manual extension directory removal, Blueprint won't use the amended version.
-* Stepping the extension version upon an amend or update shouldn't trigger that issue.
+For information about building this extension from source, debugging it, and so on, please see the developer's documentation: [README-dev][dev-readme]
 
 ## Configuration
 
-* Under the `Trace Server` preference settings, the trace server `path` can be entered.
-  * Otherwise, the default `/usr/bin/tracecompass-server` is assumed locally.
-* Command-line `arguments` can be optionally set, [any of these if Incubator][server] server.
-  * Multiple arguments have to be separated by a space character each.
+The following preference settings can be used, under `Trace Server`.
+
+* trace server `path` : enter the absolute path and filename of your trace server
+  * default value: `/usr/bin/tracecompass-server`
+* Command-line `arguments`: Enter any CLI arguments you want passed to your trace server. See [here][server] for valid options for the incubator version of the Trace Compass server
+  * Multiple arguments have to be separated by a space character
 
 ## Usage
 
-1. Use the `Trace Server: start (if stopped)` command to launch the trace server instance.
-1. The latter should be made of two related processes; `grep` for `tracecompass` or the like.
-1. Use the `Trace Server: stop or reset` command to kill both processes, stopping the server.
-1. Alternatively, exiting the application should automatically stop the started server if any.
-1. Now, `Trace Server: start (if stopped)` only starts the server if known as currently stopped.
+### Starting the Trace Server
 
-The extension checks for proper server startup/stopping; `ps` or [TSP][tsp] can be used alongside.
+Automatic start:
 
-* `Trace Server: stop or reset` resets the known `pid` to none, if stopped outside of the extension.
-* `Trace Server: stop or reset` used upon no previously started server (known `pid`) does nothing.
+If this extension is configured correctly, it will automatically start the trace server, if needed, upon a trace being opened in the trace viewer.
 
-## Debugging
+Manual start:
 
-* One may launch the extension using `Run Extension`, to debug it with breakpoints, as usual.
-* The same can be done for tests, launching `Extension Tests` to debug them.
-* The enabled breakpoints get bound only upon exercising the extension.
+Use the `Trace Server: start (if stopped)` command to launch the trace server instance. The latter should be made of two related processes; to find them, `grep` for `tracecompass` or the like.
 
-## Development
+Note: this extension is only aware of a running trace server if it started of helped start it, as per above. It will not know if you started the server on the CLI or outside using other means than described above.
 
-The usual [Prettier][prettier] and [ESLint][eslint] combo in VS Code or Codium OSS is used.
+### Stopping the Trace Server
 
-* [This matcher][matcher] is also used, since the originally generated extension per [guide].
-* Markdown gets linted with the (usual) [vscode-markdownlint][markdownlint] extension.
-* [SonarLint][sonarlint] is also assumed while further developing this extension.
+Use the `Trace Server: stop or reset` command to kill both processes, stopping the server. If the server was stopped outside the application (e.g. killed), using this command will reset the known `pid` and allow to start it again.
 
-These are actual [recommended extensions herein](.vscode/extensions.json).
+Note that exiting the application should automatically stop the started server if started through it. 
 
-* Beside using [the extension][prettier], one may run `yarn prettier --write .` (or `--check`).
+## Acknowledgments
 
-## Status
+This extension was started from VSCode's [guide](https://code.visualstudio.com/api/get-started/your-first-extension) and related [samples](https://github.com/microsoft/vscode-extension-samples/tree/main/helloworld-sample)
 
-This extension is currently under [initial development][backlog].
-
-[backlog]: https://github.com/eclipse-cdt-cloud/vscode-trace-extension/issues/15
-[blueprint]: https://theia-ide.org/docs/blueprint_download
-[client]: https://github.com/eclipse-cdt-cloud/tsp-typescript-client
-[code]: https://code.visualstudio.com
-[codium]: https://vscodium.com
-[eslint]: https://open-vsx.org/extension/dbaeumer/vscode-eslint
-[guide]: https://code.visualstudio.com/api/get-started/your-first-extension
-[install]: https://code.visualstudio.com/docs/editor/extension-marketplace#_install-from-a-vsix
-[item]: https://github.com/eclipse-cdt-cloud/vscode-trace-extension/pull/120
-[markdownlint]: https://open-vsx.org/extension/DavidAnson/vscode-markdownlint
-[matcher]: https://open-vsx.org/extension/amodio/tsl-problem-matcher
-[prettier]: https://open-vsx.org/extension/esbenp/prettier-vscode
-[sample]: https://github.com/microsoft/vscode-extension-samples/blob/main/helloworld-sample
+[dev-readme]: https://github.com/eclipse-cdt-cloud/vscode-trace-server/blob/main/README-dev.md
 [server]: https://git.eclipse.org/r/plugins/gitiles/tracecompass.incubator/org.eclipse.tracecompass.incubator/+/refs/heads/master/trace-server/#running-the-server
-[sonarlint]: https://open-vsx.org/extension/SonarSource/sonarlint-vscode
-[theia]: https://theia-ide.org
+
 [tsp]: https://github.com/eclipse-cdt-cloud/trace-server-protocol
-[vsce]: https://code.visualstudio.com/api/working-with-extensions/publishing-extension#vsce
-[vscode-trace-extension]: https://github.com/eclipse-cdt-cloud/vscode-trace-extension

@@ -1,0 +1,93 @@
+name: CI/CD
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  release:
+    types:
+      - published
+
+jobs:
+
+  build-test:
+    name: Build and Test
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        node-version: [16]
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+    - run: yarn --frozen-lockfile
+    - name: Run tests
+      uses: coactions/setup-xvfb@v1
+      with:
+        run: yarn test
+    - name: Package as VSCode Extension
+      run: yarn vsce:package
+    # Save the extension .vsix file for potential publishing
+    # in later step (if appropriate)
+    - uses: actions/upload-artifact@v4
+      with:
+        name: extension
+        path: vscode-trace-server-*.vsix
+
+  code-lint:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        node-version: [16]
+
+    steps:
+    - name: Check out Git repository
+      uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+    # ESLint and Prettier must be in `package.json`
+    - run: yarn --frozen-lockfile --ignore-scripts
+    - name: Run lint
+      run: yarn lint
+    - name: Run format check
+      run: yarn format:check
+
+  publish:
+    name: Publish extension to openvsx.org
+    runs-on: ${{ matrix.os }}
+    needs:
+      - build-test
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        node-version: [16]
+    # Only execute when the trigger was a tag (new release)
+    if: github.event_name == 'release' && startsWith(github.ref, 'refs/tags/v')
+
+    steps:
+      - uses: actions/checkout@v3
+      # restore extension from the built-test job
+      - uses: actions/download-artifact@v4
+        with:
+          name: extension
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Install dependencies
+        run: yarn --frozen-lockfile --ignore-scripts
+      - name: Publish extension
+        run: |
+          ls -al  vscode-trace-server-*.vsix
+          npx ovsx publish vscode-trace-server-*.vsix
+        env:
+          # have ovsx consume the PAT from environment - if it's not handled explicitly 
+          # in the workflow, less risk to leak it
+          OVSX_PAT: ${{ secrets.OPEN_VSX_TOKEN }}
+  
